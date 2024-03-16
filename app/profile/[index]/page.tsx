@@ -70,13 +70,13 @@ const Profile = ({ params }: { params: any }) => {
                   <Link href={`${appState?.session?.username}/settings`}>
                     <ButtonSolid
                       className="h-[3rem] w-[8rem] "
-                      title="Settings"
-                      Icon={<IoCogSharp />}
+                      title="Edit Profile"
                     />
                   </Link>
                   <ButtonOutlined
                     className="h-[3rem] w-[8rem] "
                     title="Go Premium"
+                    onClick={() => router.push("/subscription")}
                   />
                 </div>
               ) : (
@@ -120,11 +120,12 @@ const Profile = ({ params }: { params: any }) => {
               <div className="pt-[4rem] ">
                 {user?.userType === "ARTIST" ? (
                   <>
-                    <div className="grid grid-cols-4">
+                    <ImageList variant="masonry" cols={3} gap={8}>
                       {appState?.session?.username === user?.username && (
-                        <UploadButton />
+                        <ImageListItem>
+                          <UploadButton />
+                        </ImageListItem>
                       )}
-
                       {[...(artData?.getUserArtWorks || [])].map(
                         (item: ArtPiece, idx) => (
                           <ImageListItem key={item._id}>
@@ -132,7 +133,7 @@ const Profile = ({ params }: { params: any }) => {
                           </ImageListItem>
                         )
                       )}
-                    </div>
+                    </ImageList>
                   </>
                 ) : (
                   <div className={`grid grid-cols-4`}>
