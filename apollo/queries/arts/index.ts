@@ -69,6 +69,7 @@ export const GET_ART_BY_ID = gql`
         userType
         username
         specialization
+        email
       }
       artPreview
       previewImageRef

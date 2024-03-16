@@ -117,21 +117,22 @@ const Profile = ({ params }: { params: any }) => {
                 <SkeletonLoader dontShowSubtitles />
               </div>
             ) : (
-              <div className="pt-[4rem] " >
+              <div className="pt-[4rem] ">
                 {user?.userType === "ARTIST" ? (
                   <>
-                    {appState?.session?.username === user?.username && (
-                      <UploadButton />
-                    )}
-                  <ImageList variant="masonry" cols={3} gap={8}>
-                    {[...(artData?.getUserArtWorks || [])].map(
-                      (item: ArtPiece, idx) => (
-                        <ImageListItem key={item._id}>
-                          <ArtCard art={item} />
-                        </ImageListItem>
-                      )
-                    )}
-                  </ImageList>
+                    <div className="grid grid-cols-4">
+                      {appState?.session?.username === user?.username && (
+                        <UploadButton />
+                      )}
+
+                      {[...(artData?.getUserArtWorks || [])].map(
+                        (item: ArtPiece, idx) => (
+                          <ImageListItem key={item._id}>
+                            <ArtCard art={item} />
+                          </ImageListItem>
+                        )
+                      )}
+                    </div>
                   </>
                 ) : (
                   <div className={`grid grid-cols-4`}>

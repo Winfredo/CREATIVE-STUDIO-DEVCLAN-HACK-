@@ -52,7 +52,15 @@ const Header = () => {
                 </li>
               </Link>
               <li className="cursor-pointer">Explore</li>
-              <li className="cursor-pointer">Free + premium</li>
+              <Link href={"/subscription"}>
+                <li
+                  className={`cursor-pointer ${
+                    pathname.includes("/subscription") && "font-bold"
+                  } `}
+                >
+                  Free + premium
+                </li>
+              </Link>
               {user && (
                 <Link href={"/wallet"}>
                   <li

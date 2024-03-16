@@ -20,6 +20,7 @@ import ButtonSolid from "@/components/ButtonSolid";
 import { ADD_TO_CART } from "@/apollo/mutations/cart";
 import { ToastContainer, toast } from "react-toastify";
 import { GET_CART_ITEMS } from "@/apollo/queries/cart";
+import SessionAvatar from "@/components/SessionAvatar";
 
 interface MeetingProps {
   picture: string;
@@ -59,9 +60,7 @@ const ArtDetails = ({ params }: { params: any }) => {
 
   const artDetails: ArtPiece = data?.getArtById;
 
-  const [addToCart] = useMutation(ADD_TO_CART, {
-   
-  });
+  const [addToCart] = useMutation(ADD_TO_CART, {});
 
   const router = useRouter();
 
@@ -69,19 +68,22 @@ const ArtDetails = ({ params }: { params: any }) => {
     try {
       await addToCart({
         variables: { itemId: artId, artist: artDetails?.artist._id },
-        update: (cache, { data: {addToCart} }) => {
+        update: (cache, { data: { addToCart } }) => {
           const existingItemsInCart = cache.readQuery<any>({
             query: GET_CART_ITEMS,
-          })
+          });
 
           cache.writeQuery({
             query: GET_CART_ITEMS,
             data: {
-              getCartItems: [addToCart, ...(existingItemsInCart?.getCartItems || [])]
-            }
-          })
-        }
-      })
+              getCartItems: [
+                addToCart,
+                ...(existingItemsInCart?.getCartItems || []),
+              ],
+            },
+          });
+        },
+      });
       toast.success(`${artDetails?.title} added to cart`);
     } catch (error: any) {
       console.error("error", error);
@@ -166,7 +168,17 @@ const ArtDetails = ({ params }: { params: any }) => {
           </div>
         ) : (
           <>
-            <div className="mt-[5rem] flex justify-end space-x-4 w-full h-[4rem]">
+            
+            <div className="mt-[5rem] flex justify-between space-x-4 w-full h-[4rem]">
+            <div className="flex items-center space-x-4" >
+              <SessionAvatar image={artDetails?.artist.avatar} size={50} />
+
+              <div className="flex-1">
+                <h3 className="font-medium text-xl">{artDetails?.artist.fullName}</h3>
+                
+              </div>
+            </div>
+            <div className="flex items-center space-x-4" >
               {session?._id === artDetails?.artist._id && (
                 <>
                   <ActionConfirmationDialogue
@@ -182,6 +194,8 @@ const ArtDetails = ({ params }: { params: any }) => {
                   </button>
                 </>
               )}
+
+            </div>
             </div>
             <div className="pt-[1rem] ">
               <div className="flex justify-between">
@@ -221,33 +235,51 @@ const ArtDetails = ({ params }: { params: any }) => {
                     <p>Year: 2022</p>
                   </div>
 
-                  <div className="w-[80%] p-[1rem] mt-8 bg-[#f0f0f0]">
-                    <div className="text-[13px] flex justify-between">
-                      <div>
-                        <p>Get to know the artist :</p>
-                        <p className="my-2">Availability:</p>
-                        <p>Delivery Time:</p>
+                  {artDetails?.artState === "onSale" ? (
+                    <div className="w-[80%] p-[1rem] mt-8 bg-[#f0f0f0]">
+                      <div className="text-[13px] flex justify-between">
+                        <div>
+                          <p>Get to know the artist :</p>
+                          <p className="my-2">Availability:</p>
+                          <p>Delivery Time:</p>
+                        </div>
+
+                        <div className="text-[13px] text-right pr-3">
+                          <p>Anna Ovsiankina</p>
+                          <p className="my-2 ">In Stock</p>
+                          <p>Up to 14 days after purchase</p>
+                        </div>
                       </div>
 
-                      <div className="text-[13px] text-right pr-3">
-                        <p>Anna Ovsiankina</p>
-                        <p className="my-2 ">In Stock</p>
-                        <p>Up to 14 days after purchase</p>
+                      <div className="flex items-center justify-between mt-8 pr-3">
+                        <p className="text-[25px] font-medium">
+                          ${artDetails?.price}
+                        </p>
+
+                        <ButtonSolid
+                          onClick={addArtToCart}
+                          Icon={<BsCart4 />}
+                          title="Add to cart"
+                        />
                       </div>
                     </div>
+                  ) : (
+                    <div className="w-[80%] p-[1rem] mt-8 bg-[#f0f0f0]">
+                      <div className="text-[13px] flex justify-between">
+                        <div>
+                          <p>Get to know the artist :</p>
+                          <p className="my-2">Email:</p>
+                          <p>Availability:</p>
+                        </div>
 
-                    <div className="flex items-center justify-between mt-8 pr-3">
-                      <p className="text-[25px] font-medium">
-                        ${artDetails?.price}
-                      </p>
-
-                      <ButtonSolid
-                        onClick={addArtToCart}
-                        Icon={<BsCart4 />}
-                        title="Add to cart"
-                      />
+                        <div className="text-[13px] text-right pr-3">
+                          <p>{artDetails?.artist.fullName}</p>
+                          <p className="my-2">{artDetails?.artist.email}</p>
+                          <p>Showcase</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
 

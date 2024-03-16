@@ -89,11 +89,11 @@ const MobileMoney = () => {
 
       <div className="flex items-center space-x-4 mt-6">
         <p className="font-medium text-[1.2rem] text-[#595862] ">
-          Amount (GHS)
+          Amount (USD)
         </p>
 
         <div className="h-[3rem] w-[300px] border flex items-center px-2 rounded-lg ">
-          <input onChange={(e) => setDepositAmount(parseFloat(e.target.value))} type="number" className="border-0 outline-none w-full  " />
+          <input onChange={(e) => setDepositAmount(parseFloat(e.target.value))} placeholder="min. 10.00" type="number" className="border-0 outline-none w-full  " />
         </div>
       </div>
 

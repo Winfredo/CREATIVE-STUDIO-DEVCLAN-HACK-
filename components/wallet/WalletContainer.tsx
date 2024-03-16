@@ -38,7 +38,7 @@ const WalletContainer = ({children, balance}:Props) => {
 
           <div className="w-full px-3 text-[#595862] space-y-2 text-[1.1rem] pb-2 ">
             <p>Balance</p>
-            <p>$ {balance}</p>
+            <p>$ {balance}.00</p>
           </div>
         </div>
 
