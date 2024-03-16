@@ -77,7 +77,7 @@ const Subscription: React.FC = () => {
 
             <p className="mx-auto flex items-center justify-center">Yearly</p>
           </div>
-          <p className="text-center text-[30px] font-medium mt-10">Subscription Plan</p>
+          <p className="text-center text-[30px] font-medium mt-20">Subscription Plan</p>
 
           <div className=" h-[40rem] flex items-center justify-center">
             <CheapSub
