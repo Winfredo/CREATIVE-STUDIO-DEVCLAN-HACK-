@@ -42,7 +42,7 @@ const PaymentCard = ({
               <>
                 <p>LIVE</p>
                 <div className="h-[1.2rem] w-[1.2rem] rounded-full bg-[#D9D9D9] animate-pulse flex items-center justify-center ">
-                  <div className="h-[.75rem] w-[.75rem] rounded-full bg-[#000000] "></div>
+                  <div className="h-[.75rem] w-[.75rem] rounded-full bg-green-600 "></div>
                 </div>
               </>
             ) : (

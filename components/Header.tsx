@@ -53,11 +53,17 @@ const Header = () => {
               </Link>
               <li className="cursor-pointer">Explore</li>
               <li className="cursor-pointer">Free + premium</li>
-              <Link href={"/wallet"}>
-                <li className={`cursor-pointer ${
-                    pathname.includes("/wallet") && "font-bold"
-                  } `}>Wallet</li>
-              </Link>
+              {user && (
+                <Link href={"/wallet"}>
+                  <li
+                    className={`cursor-pointer ${
+                      pathname.includes("/wallet") && "font-bold"
+                    } `}
+                  >
+                    Wallet
+                  </li>
+                </Link>
+              )}
             </ul>
 
             <div className="flex items-center space-x-2">
