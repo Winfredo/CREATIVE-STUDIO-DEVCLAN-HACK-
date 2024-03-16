@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "@/components/Header";
 import Container from "@/components/Container";
+import Footer from "@/components/Footer";
 
 interface CheapSubProps {
   text: string;
@@ -147,6 +148,7 @@ const Subscription: React.FC = () => {
           </div>
         </div>
       </Container>
+      <Footer />
     </main>
   );
 };
